@@ -3,11 +3,17 @@ import { UserID } from './UserID/UserID';
 import { UserName } from './UserName/UserName';
 
 export class User {
-  constructor(
-    public readonly userID: UserID,
+  private constructor(
+    public userID: UserID,
     public userName: UserName,
     public email: Email
   ) {}
+
+  static create(userID: UserID, userName: UserName, email: Email): User {
+    return new User(userID, userName, email);
+  }
+
+  static recontract() {}
 
   changeUserName(userName: UserName): void {
     this.userName = userName;
@@ -18,10 +24,10 @@ export class User {
   }
 }
 
-const user = new User(
-  new UserID('aaaaaaa'),
-  new UserName('vnjvir'),
-  new Email('example@gmial.com')
+const user = User.create(
+  UserID.create('aaaaaaa'),
+  UserName.create('vnjvir'),
+  Email.create('example@gmial.com')
 );
 
 console.log(user.email.value);

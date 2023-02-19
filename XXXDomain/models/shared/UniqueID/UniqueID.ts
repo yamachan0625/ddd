@@ -13,7 +13,7 @@ export class UniqueID extends ValueObject<string> {
       throw new Error('許可されていない文字が含まれています');
     }
 
-    return new UniqueID(uniqueID);
+    return UniqueID.create(uniqueID);
   }
 
   static readonly MAX_LENGTH = 100;

@@ -1,24 +1,15 @@
-import { Email } from '../../XXXDomain/models/shared/Email/Email';
 import { IUserRepository } from '../../XXXDomain/models/user/IUserRepository';
 import { User } from '../../XXXDomain/models/user/User';
-import { UserID } from '../../XXXDomain/models/user/UserID/UserID';
-import { UserName } from '../../XXXDomain/models/user/UserName/UserName';
 import { CheckDuplicateUserService } from '../../XXXDomain/services/user/CheckDuplicateUserService';
 import { UserData } from './UserData';
 
-export class CreateUserService {
+export class UpdateUserService {
   constructor(
     private userRepository: IUserRepository,
     private checkDuplicateUserService: CheckDuplicateUserService
   ) {}
 
-  async execute(userName: string, email: string): Promise<UserData> {
-    const user = User.create(
-      UserID.create(), // 初期採番
-      UserName.create(userName),
-      Email.create(email)
-    );
-
+  async execute(user: User): Promise<UserData> {
     const isDuplicate = await this.checkDuplicateUserService.execute(
       user.email
     );
@@ -33,3 +24,5 @@ export class CreateUserService {
     return new UserData(createdUser);
   }
 }
+
+class UpdateUserCommand {}
