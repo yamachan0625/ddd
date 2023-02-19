@@ -6,7 +6,7 @@ export class User {
   constructor(
     public userID: UserID,
     public userName: UserName,
-    public email: Email
+    public email?: Email
   ) {}
 
   changeUserName(userName: UserName): void {
