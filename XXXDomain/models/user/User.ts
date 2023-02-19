@@ -4,13 +4,17 @@ import { UserName } from './UserName/UserName';
 
 export class User {
   constructor(
-    public userID: UserID,
+    public readonly userID: UserID,
     public userName: UserName,
-    public email?: Email
+    public email: Email
   ) {}
 
   changeUserName(userName: UserName): void {
     this.userName = userName;
+  }
+
+  changeEmail(email: Email): void {
+    this.email = email;
   }
 }
 

@@ -10,7 +10,9 @@ export class CreateUserService {
   ) {}
 
   async execute(user: User): Promise<UserData> {
-    const isDuplicate = await this.checkDuplicateUserService.execute(user);
+    const isDuplicate = await this.checkDuplicateUserService.execute(
+      user.email
+    );
     if (isDuplicate) {
       throw new Error('ユーザーは既に存在しています');
     }
