@@ -3,6 +3,6 @@ import { User } from './User';
 
 export interface IUserRepository {
   Find(email: Email): Promise<User | null>;
-  Insert(user: User): Promise<User>;
-  Update(user: User): Promise<User>;
+  Insert(user: User): Promise<void>;
+  Update(user: User): Promise<void>;
 }

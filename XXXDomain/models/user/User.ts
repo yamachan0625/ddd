@@ -13,7 +13,9 @@ export class User {
     return new User(userID, userName, email);
   }
 
-  static recontract() {}
+  static recontract(userID: UserID, userName: UserName, email: Email) {
+    return new User(userID, userName, email);
+  }
 
   changeUserName(userName: UserName): void {
     this.userName = userName;
