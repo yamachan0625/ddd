@@ -5,7 +5,7 @@ export class CheckDuplicateUserService {
   constructor(private userRepository: IUserRepository) {}
 
   async execute(email: Email) {
-    const found = await this.userRepository.Find(email);
+    const found = await this.userRepository.FindByEmail(email);
     return found !== null;
   }
 }

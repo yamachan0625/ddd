@@ -28,21 +28,23 @@ class InMemoryUserRepository implements IUserRepository {
     [ID in string]: { email: string; userName: string };
   } = {};
 
-  async Insert(user: User) {
-    this.DB[user.userID.value] = {
-      email: user.email.value,
-      userName: user.userName.value,
-    };
+  async FindByID(userId: UserID): Promise<User | null> {
+    const user = Object.entries(this.DB).find(([key]) => {
+      return userId.value === key;
+    });
+
+    if (!user) return null;
+
+    const id = user[0];
+    const val = user[1];
+    return User.recontract(
+      UserID.create(id),
+      UserName.create(val.userName),
+      Email.create(val.email)
+    );
   }
 
-  async Update(user: User) {
-    this.DB[user.userID.value] = {
-      email: user.email.value,
-      userName: user.userName.value,
-    };
-  }
-
-  async Find(email: Email): Promise<User | null> {
+  async FindByEmail(email: Email): Promise<User | null> {
     const user = Object.entries(this.DB).find(([, value]) => {
       return email.value === value.email;
     });
@@ -56,5 +58,19 @@ class InMemoryUserRepository implements IUserRepository {
       UserName.create(val.userName),
       Email.create(val.email)
     );
+  }
+
+  async Insert(user: User) {
+    this.DB[user.userID.value] = {
+      email: user.email.value,
+      userName: user.userName.value,
+    };
+  }
+
+  async Update(user: User) {
+    this.DB[user.userID.value] = {
+      email: user.email.value,
+      userName: user.userName.value,
+    };
   }
 }

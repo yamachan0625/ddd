@@ -1,11 +1,9 @@
 import { Email } from '../../XXXDomain/models/shared/Email/Email';
 import { IUserRepository } from '../../XXXDomain/models/user/IUserRepository';
-import { User } from '../../XXXDomain/models/user/User';
 import { UserID } from '../../XXXDomain/models/user/UserID/UserID';
 import { UserName } from '../../XXXDomain/models/user/UserName/UserName';
 import { CheckDuplicateUserService } from '../../XXXDomain/services/user/CheckDuplicateUserService';
 import { UpdateUserCommand } from './UpdateUserCommand';
-import { UserData } from './UserData';
 
 export class UpdateUserService {
   constructor(
@@ -13,9 +11,9 @@ export class UpdateUserService {
     private checkDuplicateUserService: CheckDuplicateUserService
   ) {}
 
-  async execute(command: UpdateUserCommand): Promise<UserData> {
+  async execute(command: UpdateUserCommand): Promise<void> {
     const targetId = UserID.create(command.userId);
-    const user = await this.userRepository.Find(targetId);
+    const user = await this.userRepository.FindByID(targetId);
 
     if (user === null) {
       throw new Error('対象のユーザーが既存在しません');
@@ -35,7 +33,6 @@ export class UpdateUserService {
       user.changeUserName(UserName.create(command.userName));
     }
 
-    const updatedUser: User = await this.userRepository.Update(user);
-    return new UserData(updatedUser);
+    await this.userRepository.Update(user);
   }
 }
