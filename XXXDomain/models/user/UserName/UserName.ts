@@ -7,7 +7,7 @@ export class UserName extends ValueObject<string> {
       userName.length < this.MIN_LENGTH
     ) {
       throw new Error(
-        `${this.MIN_LENGTH}文字以上${this.MAX_LENGTH}で指定してください`
+        `${this.MAX_LENGTH}文字以上${this.MIN_LENGTH}文字以下で指定してください`
       );
     }
 
@@ -20,5 +20,5 @@ export class UserName extends ValueObject<string> {
 
   static readonly MAX_LENGTH = 100;
   static readonly MIN_LENGTH = 1;
-  static readonly REGEX = /^[a-zA-Zぁ-んァ-ンヴｧ-ﾝﾞﾟ\u4E00-\u9FFF]+$/;
+  static readonly REGEX = /^[a-zA-Zぁ-んァ-ンヴｧ-ﾝﾞﾟー\u4E00-\u9FFF]+$/;
 }

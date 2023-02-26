@@ -1,9 +1,9 @@
-import { Email } from '../../XXXDomain/models/shared/Email/Email';
-import { IUserRepository } from '../../XXXDomain/models/user/IUserRepository';
-import { User } from '../../XXXDomain/models/user/User';
-import { UserID } from '../../XXXDomain/models/user/UserID/UserID';
-import { UserName } from '../../XXXDomain/models/user/UserName/UserName';
-import { CheckDuplicateUserService } from '../../XXXDomain/services/user/CheckDuplicateUserService';
+import { Email } from '../../../XXXDomain/models/shared/Email/Email';
+import { IUserRepository } from '../../../XXXDomain/models/user/IUserRepository';
+import { User } from '../../../XXXDomain/models/user/User';
+import { UserID } from '../../../XXXDomain/models/user/UserID/UserID';
+import { UserName } from '../../../XXXDomain/models/user/UserName/UserName';
+import { CheckDuplicateUserService } from '../../../XXXDomain/services/user/CheckDuplicateUserService';
 
 export class CreateUserService {
   constructor(

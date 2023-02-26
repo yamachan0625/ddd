@@ -25,11 +25,3 @@ export class User {
     this.email = email;
   }
 }
-
-const user = User.create(
-  UserID.create('aaaaaaa'),
-  UserName.create('vnjvir'),
-  Email.create('example@gmial.com')
-);
-
-console.log(user.email.value);

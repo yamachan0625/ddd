@@ -24,7 +24,7 @@ export class createInMemoryUserRepository {
 class InMemoryUserRepository implements IUserRepository {
   constructor() {}
 
-  private DB: {
+  public DB: {
     [ID in string]: { email: string; userName: string };
   } = {};
 

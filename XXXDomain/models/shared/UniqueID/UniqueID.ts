@@ -3,9 +3,12 @@ import { nanoid } from 'nanoid';
 
 export class UniqueID extends ValueObject<string> {
   static create(uniqueID: string = nanoid()): UniqueID {
-    if (this.MAX_LENGTH > 100 || this.MIN_LENGTH < 8) {
+    if (
+      uniqueID.length > this.MAX_LENGTH ||
+      uniqueID.length < this.MIN_LENGTH
+    ) {
       throw new Error(
-        `${this.MIN_LENGTH}文字以上${this.MAX_LENGTH}で指定してください`
+        `${this.MIN_LENGTH}文字以上${this.MAX_LENGTH}文字以下で指定してください`
       );
     }
 
@@ -13,7 +16,7 @@ export class UniqueID extends ValueObject<string> {
       throw new Error('許可されていない文字が含まれています');
     }
 
-    return UniqueID.create(uniqueID);
+    return new UniqueID(uniqueID);
   }
 
   static readonly MAX_LENGTH = 100;
