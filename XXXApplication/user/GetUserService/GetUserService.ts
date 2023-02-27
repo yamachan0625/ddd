@@ -1,6 +1,6 @@
-import { IUserRepository } from '../../XXXDomain/models/user/IUserRepository';
-import { UserID } from '../../XXXDomain/models/user/UserID/UserID';
-import { UserData } from './UserData';
+import { IUserRepository } from '../../../XXXDomain/models/user/IUserRepository';
+import { UserID } from '../../../XXXDomain/models/user/UserID/UserID';
+import { UserData } from '../UserData';
 
 export class GetUserService {
   constructor(private userRepository: IUserRepository) {}

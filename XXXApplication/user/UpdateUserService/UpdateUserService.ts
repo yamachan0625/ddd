@@ -1,8 +1,8 @@
-import { Email } from '../../XXXDomain/models/shared/Email/Email';
-import { IUserRepository } from '../../XXXDomain/models/user/IUserRepository';
-import { UserID } from '../../XXXDomain/models/user/UserID/UserID';
-import { UserName } from '../../XXXDomain/models/user/UserName/UserName';
-import { CheckDuplicateUserService } from '../../XXXDomain/services/user/CheckDuplicateUserService';
+import { Email } from '../../../XXXDomain/models/shared/Email/Email';
+import { IUserRepository } from '../../../XXXDomain/models/user/IUserRepository';
+import { UserID } from '../../../XXXDomain/models/user/UserID/UserID';
+import { UserName } from '../../../XXXDomain/models/user/UserName/UserName';
+import { CheckDuplicateUserService } from '../../../XXXDomain/services/user/CheckDuplicateUserService';
 import { UpdateUserCommand } from './UpdateUserCommand';
 
 export class UpdateUserService {
@@ -20,13 +20,16 @@ export class UpdateUserService {
     }
 
     if (command.email) {
-      user.changeEmail(Email.create(command.email));
       const isDuplicate = await this.checkDuplicateUserService.execute(
-        user.email
+        Email.create(command.email)
       );
-      if (isDuplicate) {
+
+      console.log(isDuplicate, command.email, user.email.value);
+      if (isDuplicate && command.email !== user.email.value) {
         throw new Error('ユーザーは既に存在しています');
       }
+
+      user.changeEmail(Email.create(command.email));
     }
 
     if (command.userName) {
