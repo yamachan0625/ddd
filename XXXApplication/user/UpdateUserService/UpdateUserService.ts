@@ -24,7 +24,6 @@ export class UpdateUserService {
         Email.create(command.email)
       );
 
-      console.log(isDuplicate, command.email, user.email.value);
       if (isDuplicate && command.email !== user.email.value) {
         throw new Error('ユーザーは既に存在しています');
       }
