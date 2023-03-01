@@ -4,6 +4,7 @@ import { UserID } from '../../../XXXDomain/models/user/UserID/UserID';
 import { UserName } from '../../../XXXDomain/models/user/UserName/UserName';
 import { CheckDuplicateUserService } from '../../../XXXDomain/services/user/CheckDuplicateUserService';
 import { CreateUserService } from '../CreateUserService/CreateUserService';
+import { CreateUserCommand } from '../CreateUserService/CreateUserServiceCommand';
 import { UpdateUserCommand } from './UpdateUserCommand';
 import { UpdateUserService } from './UpdateUserService';
 
@@ -28,7 +29,7 @@ describe('UpdateUserService', () => {
   );
 
   beforeAll(async () => {
-    await createUserService.execute(userName, email);
+    await createUserService.execute(new CreateUserCommand(userName, email));
     const user = await userRepository.FindByEmail(Email.create(email));
     userId = user?.userID.value as string;
   });

@@ -4,6 +4,7 @@ import { User } from '../../../XXXDomain/models/user/User';
 import { UserID } from '../../../XXXDomain/models/user/UserID/UserID';
 import { UserName } from '../../../XXXDomain/models/user/UserName/UserName';
 import { CheckDuplicateUserService } from '../../../XXXDomain/services/user/CheckDuplicateUserService';
+import { CreateUserCommand } from './CreateUserServiceCommand';
 
 export class CreateUserService {
   constructor(
@@ -11,11 +12,11 @@ export class CreateUserService {
     private checkDuplicateUserService: CheckDuplicateUserService
   ) {}
 
-  async execute(userName: string, email: string): Promise<void> {
+  async execute(command: CreateUserCommand): Promise<void> {
     const user = User.create(
       UserID.create(), // 初期採番
-      UserName.create(userName),
-      Email.create(email)
+      UserName.create(command.userName),
+      Email.create(command.email)
     );
 
     const isDuplicate = await this.checkDuplicateUserService.execute(

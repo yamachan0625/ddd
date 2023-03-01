@@ -2,6 +2,7 @@ import { createInMemoryUserRepository } from '../../../Infrastructure/Inmemory/I
 import { Email } from '../../../XXXDomain/models/shared/Email/Email';
 import { CheckDuplicateUserService } from '../../../XXXDomain/services/user/CheckDuplicateUserService';
 import { CreateUserService } from './CreateUserService';
+import { CreateUserCommand } from './CreateUserServiceCommand';
 
 describe('CreateUserService', () => {
   it('ユーザーが正常に作成できる', async () => {
@@ -18,7 +19,7 @@ describe('CreateUserService', () => {
     // when
     const userName = 'テストユーザー';
     const email = 'test@test.com';
-    await createUserService.execute(userName, email);
+    await createUserService.execute(new CreateUserCommand(userName, email));
 
     // then
     const createdUserEmail = Email.create(email);
@@ -44,7 +45,9 @@ describe('CreateUserService', () => {
     const email = 'test@test.com'; // 同じアドレス
 
     // then
-    await expect(createUserService.execute(userName, email)).rejects.toThrow();
+    await expect(
+      createUserService.execute(new CreateUserCommand(userName, email))
+    ).rejects.toThrow();
   });
 
   it('異常な値が渡される場合異常発生', async () => {
@@ -63,6 +66,8 @@ describe('CreateUserService', () => {
     const email = 'brebebfdberbre'; // 無効なメールアドレス形式
 
     // then
-    await expect(createUserService.execute(userName, email)).rejects.toThrow();
+    await expect(
+      createUserService.execute(new CreateUserCommand(userName, email))
+    ).rejects.toThrow();
   });
 });
