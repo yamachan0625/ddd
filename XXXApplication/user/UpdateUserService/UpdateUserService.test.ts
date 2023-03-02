@@ -70,7 +70,7 @@ describe('UpdateUserService', () => {
   it('異常系:メールアドレスが同一のユーザーが既に存在していた場合例外', async () => {
     // 重複させるデータの生成
     const testEmail = 'test2@test.com';
-    await createUserService.execute(userName, testEmail);
+    await createUserService.execute(new CreateUserCommand(userName, testEmail));
 
     // then
     await expect(
