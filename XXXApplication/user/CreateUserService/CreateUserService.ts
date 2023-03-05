@@ -1,7 +1,6 @@
 import { Email } from '../../../XXXDomain/models/shared/Email/Email';
 import { IUserRepository } from '../../../XXXDomain/models/user/IUserRepository';
 import { User } from '../../../XXXDomain/models/user/User';
-import { UserID } from '../../../XXXDomain/models/user/UserID/UserID';
 import { UserName } from '../../../XXXDomain/models/user/UserName/UserName';
 import { CheckDuplicateUserService } from '../../../XXXDomain/services/user/CheckDuplicateUserService';
 import { CreateUserCommand } from './CreateUserServiceCommand';
@@ -14,7 +13,6 @@ export class CreateUserService {
 
   async execute(command: CreateUserCommand): Promise<void> {
     const user = User.create(
-      UserID.create(), // 初期採番
       UserName.create(command.userName),
       Email.create(command.email)
     );

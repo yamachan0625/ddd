@@ -21,7 +21,7 @@ export class createInMemoryUserRepository {
   }
 }
 
-class InMemoryUserRepository implements IUserRepository {
+export default class InMemoryUserRepository implements IUserRepository {
   constructor() {}
 
   public DB: {

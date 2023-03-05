@@ -9,8 +9,8 @@ export class User {
     public email: Email
   ) {}
 
-  static create(userID: UserID, userName: UserName, email: Email): User {
-    return new User(userID, userName, email);
+  static create(userName: UserName, email: Email): User {
+    return new User(UserID.create(), userName, email);
   }
 
   static recontract(userID: UserID, userName: UserName, email: Email) {
