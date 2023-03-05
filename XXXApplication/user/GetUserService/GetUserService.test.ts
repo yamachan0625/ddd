@@ -2,7 +2,9 @@ import { GetUserService } from './GetUserService';
 import InMemoryUserRepository from '../../../Infrastructure/Inmemory/InMemoryUserRepository';
 import { UserID } from '../../../XXXDomain/models/user/UserID/UserID';
 import { UserData } from '../UserData';
-import { TestUserFactory } from './TestUserFactory';
+import { Email } from '../../../XXXDomain/models/shared/Email/Email';
+import { User } from '../../../XXXDomain/models/user/User';
+import { UserName } from '../../../XXXDomain/models/user/UserName/UserName';
 
 jest.mock('../../../Infrastructure/Inmemory/InMemoryUserRepository'); // パスを指定
 const InMemoryUserRepositoryMock = InMemoryUserRepository as jest.Mock; // TypeScriptでは型変換する必要がある
@@ -47,3 +49,15 @@ describe('GetUserService', () => {
     expect(res).toBeNull();
   });
 });
+
+export const TestUserFactory = (
+  userID: UserID = UserID.create(),
+  userName: string = 'テストユーザー',
+  email: string = 'test@test.com'
+): User => {
+  return User.recontract(
+    userID,
+    UserName.create(userName),
+    Email.create(email)
+  );
+};
