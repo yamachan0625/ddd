@@ -1,18 +1,14 @@
 import { GetUserService } from './GetUserService';
 import InMemoryUserRepository from '../../../Infrastructure/Inmemory/InMemoryUserRepository';
 import { UserID } from '../../../XXXDomain/models/user/UserID/UserID';
-import { User } from '../../../XXXDomain/models/user/User';
-import { UserName } from '../../../XXXDomain/models/user/UserName/UserName';
-import { Email } from '../../../XXXDomain/models/shared/Email/Email';
 import { UserData } from '../UserData';
+import { TestUserFactory } from './TestUserFactory';
 
 jest.mock('../../../Infrastructure/Inmemory/InMemoryUserRepository'); // パスを指定
 const InMemoryUserRepositoryMock = InMemoryUserRepository as jest.Mock; // TypeScriptでは型変換する必要がある
 
 describe('GetUserService', () => {
   const userID = 'mock-user-test-id';
-  const userName = 'テストユーザー';
-  const email = 'test@test.com';
 
   it('正常系:userがrepositoryから取得できる場合、結果がDTOに詰め替えて返される', async () => {
     // given
@@ -21,13 +17,7 @@ describe('GetUserService', () => {
       return {
         FindByID: async (userID: UserID) => {
           return new Promise((resolve) =>
-            resolve(
-              User.recontract(
-                UserID.create(userID.value),
-                UserName.create(userName),
-                Email.create(email)
-              )
-            )
+            resolve(TestUserFactory(UserID.create(userID.value)))
           );
         },
       };
@@ -36,13 +26,7 @@ describe('GetUserService', () => {
     const getUserService = new GetUserService(new InMemoryUserRepository());
 
     const actualDTO = await getUserService.execute(UserID.create(userID));
-    const expectDTO = new UserData(
-      User.recontract(
-        UserID.create(userID),
-        UserName.create(userName),
-        Email.create(email)
-      )
-    );
+    const expectDTO = new UserData(TestUserFactory(UserID.create(userID)));
     expect(actualDTO).toEqual(expectDTO);
   });
 
