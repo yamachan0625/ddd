@@ -70,6 +70,7 @@ export default class InMemoryUserRepository implements IUserRepository {
     for (const event of user.getDomainEvents()) {
       await domainEventPublisher.publish(event);
     }
+    user.clearDomainEvents();
   }
 
   async Update(user: User) {
