@@ -1,16 +1,22 @@
+import { DomainEventStorable } from '../../shared/DomainEvent';
+import { UserCreateEvent } from '../activityHistory/ActivityHistory';
 import { Email } from '../shared/Email/Email';
 import { UserID } from './UserID/UserID';
 import { UserName } from './UserName/UserName';
 
-export class User {
+export class User extends DomainEventStorable {
   private constructor(
     public userID: UserID,
     public userName: UserName,
     public email: Email
-  ) {}
+  ) {
+    super();
+  }
 
   static create(userName: UserName, email: Email): User {
-    return new User(UserID.create(), userName, email);
+    const user = new User(UserID.create(), userName, email);
+    user.addDomainEvent(new UserCreateEvent(userName.value));
+    return user;
   }
 
   static recontract(userID: UserID, userName: UserName, email: Email) {
