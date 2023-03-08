@@ -16,7 +16,7 @@ export class DomainEventListener {
 }
 
 export interface DomainEvent {
-  name: 'UserCreateEvent';
+  name: 'UserCreatedEvent';
 }
 
 export class DomainEventPublisher {
