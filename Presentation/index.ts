@@ -1,4 +1,5 @@
 import express, { Request, Response } from 'express';
+import { DomainEventPublisher } from '../Infrastructure/event/DomainEventPublisher';
 import InMemoryUserRepository, {
   createInMemoryUserRepository,
 } from '../Infrastructure/Inmemory/InMemoryUserRepository';
@@ -7,7 +8,6 @@ import { CreateUserCommand } from '../XXXApplication/user/CreateUserService/Crea
 import { GetUserService } from '../XXXApplication/user/GetUserService/GetUserService';
 import { UserID } from '../XXXDomain/models/user/UserID/UserID';
 import { CheckDuplicateUserService } from '../XXXDomain/services/user/CheckDuplicateUserService';
-import { DomainEventPublisher } from '../XXXDomain/shared/DomainEvent';
 
 const app = express();
 

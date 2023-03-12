@@ -1,9 +1,9 @@
+import { DomainEventPublisher } from '../../../Infrastructure/event/DomainEventPublisher';
 import { Email } from '../../../XXXDomain/models/shared/Email/Email';
 import { IUserRepository } from '../../../XXXDomain/models/user/IUserRepository';
 import { User } from '../../../XXXDomain/models/user/User';
 import { UserName } from '../../../XXXDomain/models/user/UserName/UserName';
 import { CheckDuplicateUserService } from '../../../XXXDomain/services/user/CheckDuplicateUserService';
-import { DomainEventPublisher } from '../../../XXXDomain/shared/DomainEvent';
 import { CreateUserCommand } from './CreateUserServiceCommand';
 
 export class CreateUserService {

@@ -1,6 +1,6 @@
 import { DomainEventStorable } from '../../shared/DomainEvent';
-import { UserCreatedEvent } from '../activityHistory/ActivityHistory';
 import { Email } from '../shared/Email/Email';
+import { UserCreatedEvent } from './UserCreatedEvent';
 import { UserID } from './UserID/UserID';
 import { UserName } from './UserName/UserName';
 
@@ -15,9 +15,10 @@ export class User extends DomainEventStorable {
 
   static create(userName: UserName, email: Email): User {
     const userId = UserID.create();
-    console.log({ userId });
     const user = new User(userId, userName, email);
-    user.addDomainEvent(new UserCreatedEvent(userName.value));
+
+    user.addDomainEvent(new UserCreatedEvent(user));
+
     return user;
   }
 

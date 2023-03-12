@@ -3,7 +3,7 @@ import { IUserRepository } from '../../XXXDomain/models/user/IUserRepository';
 import { User } from '../../XXXDomain/models/user/User';
 import { UserID } from '../../XXXDomain/models/user/UserID/UserID';
 import { UserName } from '../../XXXDomain/models/user/UserName/UserName';
-import { DomainEventPublisher } from '../../XXXDomain/shared/DomainEvent';
+import { DomainEventPublisher } from '../event/DomainEventPublisher';
 
 // シングルトンで返す
 // インスタンスの使いわ回しをしなければ保存したデータが消えてしまう
@@ -71,7 +71,8 @@ export default class InMemoryUserRepository implements IUserRepository {
     for (const event of user.getDomainEvents()) {
       await domainEventPublisher.publish(event);
     }
-    // user.clearDomainEvents();
+
+    user.clearDomainEvents();
   }
 
   async Update(user: User) {
