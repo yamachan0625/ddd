@@ -14,6 +14,7 @@ export class createInMemoryUserRepository {
   public static get instance() {
     // instanceがなければ生成
     if (!this._instance) {
+      console.log('new InMemoryUserRepository instance');
       this._instance = new InMemoryUserRepository();
     }
 
@@ -70,7 +71,7 @@ export default class InMemoryUserRepository implements IUserRepository {
     for (const event of user.getDomainEvents()) {
       await domainEventPublisher.publish(event);
     }
-    user.clearDomainEvents();
+    // user.clearDomainEvents();
   }
 
   async Update(user: User) {

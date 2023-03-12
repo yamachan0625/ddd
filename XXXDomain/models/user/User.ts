@@ -14,7 +14,9 @@ export class User extends DomainEventStorable {
   }
 
   static create(userName: UserName, email: Email): User {
-    const user = new User(UserID.create(), userName, email);
+    const userId = UserID.create();
+    console.log({ userId });
+    const user = new User(userId, userName, email);
     user.addDomainEvent(new UserCreatedEvent(userName.value));
     return user;
   }
