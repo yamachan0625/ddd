@@ -1,11 +1,10 @@
 import express, { Request, Response } from 'express';
 import { DomainEventPublisher } from '../Infrastructure/event/DomainEventPublisher';
-import InMemoryUserRepository, {
-  createInMemoryUserRepository,
-} from '../Infrastructure/Inmemory/InMemoryUserRepository';
+import { createInMemoryUserRepository } from '../Infrastructure/Inmemory/InMemoryUserRepository';
 import { CreateUserService } from '../XXXApplication/user/CreateUserService/CreateUserService';
 import { CreateUserCommand } from '../XXXApplication/user/CreateUserService/CreateUserServiceCommand';
 import { GetUserService } from '../XXXApplication/user/GetUserService/GetUserService';
+import { ActivityHistoryEventListener } from '../XXXDomain/models/activityHistory/ActivityHistoryEventListener';
 import { UserID } from '../XXXDomain/models/user/UserID/UserID';
 import { CheckDuplicateUserService } from '../XXXDomain/services/user/CheckDuplicateUserService';
 
@@ -19,10 +18,11 @@ app.use(
 );
 
 app.listen(3001, () => {
+  // Event Listenerを起動
+  // TODO: 起動場所、unsubscribeについて考える必要あり
+  new ActivityHistoryEventListener();
   console.log(`Express server listening`);
 });
-
-const userRepository = createInMemoryUserRepository.instance;
 
 app.get(
   '/users',
@@ -32,6 +32,7 @@ app.get(
   ) => {
     const { userId } = req.query;
 
+    const userRepository = createInMemoryUserRepository.instance;
     const getUserService = new GetUserService(userRepository);
     const userData = await getUserService.execute(UserID.create(userId));
 
@@ -50,6 +51,7 @@ app.post(
     const { userName, email } = req.body;
     const command = new CreateUserCommand(userName, email);
 
+    const userRepository = createInMemoryUserRepository.instance;
     const checkDuplicateUserService = new CheckDuplicateUserService(
       userRepository
     );

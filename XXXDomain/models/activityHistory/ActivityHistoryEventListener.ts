@@ -19,4 +19,3 @@ export class ActivityHistoryEventListener {
     // await this.activityHistoryRepository.Insert(activityHistory);
   }
 }
-new ActivityHistoryEventListener();
