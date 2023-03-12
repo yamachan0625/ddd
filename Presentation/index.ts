@@ -1,5 +1,6 @@
 import express, { Request, Response } from 'express';
 import { DomainEventPublisher } from '../Infrastructure/event/DomainEventPublisher';
+import { createInMemoryActivityHistoryRepository } from '../Infrastructure/Inmemory/InMemoryActivityHistory';
 import { createInMemoryUserRepository } from '../Infrastructure/Inmemory/InMemoryUserRepository';
 import { CreateUserService } from '../XXXApplication/user/CreateUserService/CreateUserService';
 import { CreateUserCommand } from '../XXXApplication/user/CreateUserService/CreateUserServiceCommand';
@@ -20,7 +21,9 @@ app.use(
 app.listen(3001, () => {
   // Event Listenerを起動
   // TODO: 起動場所、unsubscribeについて考える必要あり
-  new ActivityHistoryEventListener();
+  new ActivityHistoryEventListener(
+    createInMemoryActivityHistoryRepository.instance
+  );
   console.log(`Express server listening`);
 });
 
